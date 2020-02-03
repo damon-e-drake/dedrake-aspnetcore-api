@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DEDrake", "web-api\DEDrake.csproj", "{9680F54F-92E9-4CCE-8449-9048E6CD1C3D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DEDrake.Tests", "tests\DEDrake.Tests.csproj", "{C22615AA-F0CC-4E89-8E8E-496CE01808B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9680F54F-92E9-4CCE-8449-9048E6CD1C3D} = {9680F54F-92E9-4CCE-8449-9048E6CD1C3D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9680F54F-92E9-4CCE-8449-9048E6CD1C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9680F54F-92E9-4CCE-8449-9048E6CD1C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9680F54F-92E9-4CCE-8449-9048E6CD1C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9680F54F-92E9-4CCE-8449-9048E6CD1C3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22615AA-F0CC-4E89-8E8E-496CE01808B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22615AA-F0CC-4E89-8E8E-496CE01808B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22615AA-F0CC-4E89-8E8E-496CE01808B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22615AA-F0CC-4E89-8E8E-496CE01808B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59AADAA0-1C80-4B44-8E1D-83E90FB3E13E}
+	EndGlobalSection
+EndGlobal
