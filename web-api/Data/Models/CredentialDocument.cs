@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System;
 
 namespace DEDrake.Data.Models {
-  public class CredentialModel : ICredentialModel {
+  public class CredentialDocument : ICredentialDocument {
     [BsonId, BsonRepresentation(BsonType.ObjectId)]
     public string ID { get; set; }
 

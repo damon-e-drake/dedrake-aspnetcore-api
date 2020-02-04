@@ -1,33 +1,57 @@
-﻿namespace DEDrake.Services {
+﻿using DEDrake.Data.Models;
+using DEDrake.Services.Interfaces;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
-  //public interface IUserService {
-  //  Task<IEnumerable<UserDocument>> GetAsync();
-  //  Task<IEnumerable<UserDocument>> GetAsync(Expression<Func<UserDocument, bool>> predicate);
-  //  Task<UserDocument> FindAsync(Guid id);
-  //  Task<UserDocument> AddAsync(UserDocument user);
-  //  Task<UserDocument> UpdateAsync(UserDocument user);
-  //  Task<UserDocument> DeleteAsync(Guid id);
-  //  Task<string> AuthenticateAsync(string username, string password);
-  //}
+namespace DEDrake.Services {
+  public class UserService : IUserService<UserDocument> {
 
-  //public class UserService : IUserService {
+    private readonly IMongoCollection<UserDocument> _collection;
 
-  //  private readonly IDocumentRepository<UserDocument> _repository;
+    public UserService(IConfiguration config, string collection) {
+      var endpoint = config.GetValue<string>("MongoDB:Endpoint");
+      var database = config.GetValue<string>("MongoDB:Database");
 
-  //  public UserService(IDocumentRepository<UserDocument> repository) {
-  //    _repository = repository;
-  //  }
+      var client = new MongoClient(endpoint);
+      var db = client.GetDatabase(database);
+      _collection = db.GetCollection<UserDocument>(collection);
+    }
 
-  //  public async Task<IEnumerable<UserDocument>> GetAsync() => await _repository.GetAllAsync();
-  //  public async Task<IEnumerable<UserDocument>> GetAsync(Expression<Func<UserDocument, bool>> predicate) => await _repository.GetAsync(predicate);
-  //  public async Task<UserDocument> FindAsync(Guid id) => await _repository.FindAsync(id.ToString(), null);
-  //  public async Task<UserDocument> AddAsync(UserDocument user) => await _repository.AddAsync(user);
-  //  public async Task<UserDocument> UpdateAsync(UserDocument user) => await _repository.UpdateAsync(user.ID, user);
-  //  public async Task<UserDocument> DeleteAsync(Guid id) => await _repository.DeleteAsync(id.ToString(), null);
+    public async Task<IEnumerable<UserDocument>> GetAsync() {
+      var cursor = await _collection.FindAsync(x => true);
+      return await cursor.ToListAsync();
+    }
 
-  //  public async Task<string> AuthenticateAsync(string username, string password) {
-  //    throw new NotImplementedException();
-  //  }
-  //}
+    public async Task<IEnumerable<UserDocument>> GetAsync(Expression<Func<UserDocument, bool>> predicate) {
+      var cursor = await _collection.FindAsync<UserDocument>(predicate);
+      return await cursor.ToListAsync();
+    }
 
+    public async Task<UserDocument> FindAsync(string id, string partitionKey = null) {
+      var cursor = await _collection.FindAsync(x => x.ID == id);
+      return await cursor.FirstOrDefaultAsync();
+    }
+
+    public async Task<UserDocument> AddAsync(UserDocument item) {
+      _collection.InsertOne(item);
+      return await Task.FromResult(item);
+    }
+
+    public async Task<UserDocument> UpdateAsync(string id, UserDocument item) {
+      var result = await _collection.ReplaceOneAsync(x => x.ID == id, item);
+      if (result.IsAcknowledged && result.ModifiedCount == 1) { return item; }
+      return null;
+    }
+
+    public async Task<UserDocument> DeleteAsync(string id, string partitionKey = null) {
+      var user = await FindAsync(id, partitionKey);
+      var result = await _collection.DeleteOneAsync(x => x.ID == id);
+      if (result.IsAcknowledged && result.DeletedCount == 1) { return user; }
+      return null;
+    }
+  }
 }

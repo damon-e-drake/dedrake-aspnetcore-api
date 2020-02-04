@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace DEDrake.Data.Interfaces {
-  public interface ICredentialModel {
+  public interface ICredentialDocument {
     string ID { get; set; }
     string Email { get; set; }
     string Password { get; set; }
