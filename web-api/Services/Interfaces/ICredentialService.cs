@@ -3,10 +3,10 @@ using System;
 using System.Threading.Tasks;
 
 namespace DEDrake.Services.Interfaces {
-  public interface ICredentialService<T> : IDocumentService<T> where T : class {
+  public interface ICredentialService : IDocumentService<ICredentialDocument> {
     Task<ILoginModel> Authenticate(ILoginModel model);
-    Task<T> SetPassword(string email, string password);
-    Task<T> SetResetPin(string email);
-    Task<T> SetExpires(string email, DateTime? expires);
+    Task<ICredentialDocument> SetPassword(string email, string password);
+    Task<ICredentialDocument> SetResetPin(string email);
+    Task<ICredentialDocument> SetExpires(string email, DateTime? expires);
   }
 }

@@ -1,5 +1,4 @@
-﻿using DEDrake.Data.Models;
-using DEDrake.Services;
+﻿using DEDrake.Services;
 using DEDrake.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,8 +14,8 @@ namespace DEDrake {
     }
 
     public void AddDocumentServices() {
-      _services.AddSingleton<IUserService<UserDocument>>(new UserService(_config, "Users"));
-      _services.AddSingleton<ICredentialService<CredentialDocument>>(new CredentialService(_config, "Credentials"));
+      _services.AddSingleton<IUserService>(new UserService(_config, "Users"));
+      _services.AddSingleton<ICredentialService>(new CredentialService(_config, "Credentials"));
     }
   }
 }

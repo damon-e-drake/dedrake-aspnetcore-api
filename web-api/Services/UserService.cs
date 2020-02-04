@@ -1,4 +1,5 @@
-﻿using DEDrake.Data.Models;
+﻿using DEDrake.Data.Interfaces;
+using DEDrake.Data.Models;
 using DEDrake.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
@@ -8,7 +9,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DEDrake.Services {
-  public class UserService : IUserService<UserDocument> {
+  public class UserService : IUserService {
 
     private readonly IMongoCollection<UserDocument> _collection;
 
@@ -21,33 +22,34 @@ namespace DEDrake.Services {
       _collection = db.GetCollection<UserDocument>(collection);
     }
 
-    public async Task<IEnumerable<UserDocument>> GetAsync() {
+    public async Task<IEnumerable<IUserDocument>> GetAsync() {
       var cursor = await _collection.FindAsync(x => true);
       return await cursor.ToListAsync();
     }
 
-    public async Task<IEnumerable<UserDocument>> GetAsync(Expression<Func<UserDocument, bool>> predicate) {
-      var cursor = await _collection.FindAsync<UserDocument>(predicate);
+    public async Task<IEnumerable<IUserDocument>> GetAsync(Expression<Func<UserDocument, bool>> predicate) {
+      var cursor = await _collection.FindAsync(predicate);
       return await cursor.ToListAsync();
     }
 
-    public async Task<UserDocument> FindAsync(string id, string partitionKey = null) {
+    public async Task<IUserDocument> FindAsync(string id, string partitionKey = null) {
       var cursor = await _collection.FindAsync(x => x.ID == id);
       return await cursor.FirstOrDefaultAsync();
     }
 
-    public async Task<UserDocument> AddAsync(UserDocument item) {
-      _collection.InsertOne(item);
+    public async Task<IUserDocument> AddAsync(IUserDocument item) {
+      _collection.InsertOne((UserDocument)item);
       return await Task.FromResult(item);
     }
 
-    public async Task<UserDocument> UpdateAsync(string id, UserDocument item) {
-      var result = await _collection.ReplaceOneAsync(x => x.ID == id, item);
+    public async Task<IUserDocument> UpdateAsync(string id, IUserDocument item) {
+      var doc = (UserDocument)item;
+      var result = await _collection.ReplaceOneAsync(x => x.ID == id, doc);
       if (result.IsAcknowledged && result.ModifiedCount == 1) { return item; }
       return null;
     }
 
-    public async Task<UserDocument> DeleteAsync(string id, string partitionKey = null) {
+    public async Task<IUserDocument> DeleteAsync(string id, string partitionKey = null) {
       var user = await FindAsync(id, partitionKey);
       var result = await _collection.DeleteOneAsync(x => x.ID == id);
       if (result.IsAcknowledged && result.DeletedCount == 1) { return user; }

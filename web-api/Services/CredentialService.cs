@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DEDrake.Services {
-  public class CredentialService : ICredentialService<CredentialDocument> {
+  public class CredentialService : ICredentialService {
 
     private readonly IMongoCollection<CredentialDocument> _collection;
 
@@ -22,27 +22,27 @@ namespace DEDrake.Services {
       _collection = db.GetCollection<CredentialDocument>(collection);
     }
 
-    public Task<IEnumerable<CredentialDocument>> GetAsync() {
+    public Task<IEnumerable<ICredentialDocument>> GetAsync() {
       throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<CredentialDocument>> GetAsync(Expression<Func<CredentialDocument, bool>> predicate) {
+    public Task<IEnumerable<ICredentialDocument>> Get(Expression<Func<CredentialDocument, bool>> predicate) {
       throw new NotImplementedException();
     }
 
-    public Task<CredentialDocument> FindAsync(string id, string partitionKey) {
+    public Task<ICredentialDocument> FindAsync(string id, string partitionKey) {
       throw new NotImplementedException();
     }
 
-    public Task<CredentialDocument> AddAsync(CredentialDocument item) {
+    public Task<ICredentialDocument> AddAsync(ICredentialDocument item) {
       throw new NotImplementedException();
     }
 
-    public Task<CredentialDocument> UpdateAsync(string id, CredentialDocument item) {
+    public Task<ICredentialDocument> UpdateAsync(string id, ICredentialDocument item) {
       throw new NotImplementedException();
     }
 
-    public Task<CredentialDocument> DeleteAsync(string id, string partitionKey = null) {
+    public Task<ICredentialDocument> DeleteAsync(string id, string partitionKey = null) {
       throw new NotImplementedException();
     }
 
@@ -50,15 +50,15 @@ namespace DEDrake.Services {
       throw new NotImplementedException();
     }
 
-    public Task<CredentialDocument> SetExpires(string email, DateTime? expires) {
+    public Task<ICredentialDocument> SetExpires(string email, DateTime? expires) {
       throw new NotImplementedException();
     }
 
-    public Task<CredentialDocument> SetPassword(string email, string password) {
+    public Task<ICredentialDocument> SetPassword(string email, string password) {
       throw new NotImplementedException();
     }
 
-    public Task<CredentialDocument> SetResetPin(string email) {
+    public Task<ICredentialDocument> SetResetPin(string email) {
       throw new NotImplementedException();
     }
 

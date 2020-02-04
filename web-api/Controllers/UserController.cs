@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace DEDrake.Controllers {
   [ApiController, Route("v1/users")]
   public class UserController : ControllerBase {
-    private readonly IUserService<UserDocument> _service;
+    private readonly IUserService _service;
 
-    public UserController(IUserService<UserDocument> service) {
+    public UserController(IUserService service) {
       _service = service;
     }
 
@@ -33,7 +33,7 @@ namespace DEDrake.Controllers {
     public async Task<IActionResult> GetMyAccount() {
       var claim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Email).Value;
 
-      var document = await _service.GetAsync(x => x.Email == claim);
+      var document = await _service.GetAsync();
       var user = document.FirstOrDefault();
       if (user == null) { return NotFound(); }
 
