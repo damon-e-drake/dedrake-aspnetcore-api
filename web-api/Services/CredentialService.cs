@@ -26,7 +26,7 @@ namespace DEDrake.Services {
       throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<ICredentialDocument>> Get(Expression<Func<CredentialDocument, bool>> predicate) {
+    public Task<IEnumerable<ICredentialDocument>> GetAsync(Expression<Func<ICredentialDocument, bool>> predicate) {
       throw new NotImplementedException();
     }
 
@@ -46,8 +46,10 @@ namespace DEDrake.Services {
       throw new NotImplementedException();
     }
 
-    public Task<ILoginModel> Authenticate(ILoginModel model) {
-      throw new NotImplementedException();
+    public async Task<ILoginModel> Authenticate(ILoginModel model) {
+      // var password = model.Get
+
+      return null;
     }
 
     public Task<ICredentialDocument> SetExpires(string email, DateTime? expires) {

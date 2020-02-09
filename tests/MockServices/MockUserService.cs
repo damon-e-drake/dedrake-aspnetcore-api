@@ -63,7 +63,7 @@ namespace DEDrake.Tests.MockServices {
       return await Task.FromResult(_users.ToList());
     }
 
-    public async Task<IEnumerable<IUserDocument>> GetAsync(Expression<Func<MockUserDocument, bool>> predicate) {
+    public async Task<IEnumerable<IUserDocument>> GetAsync(Expression<Func<IUserDocument, bool>> predicate) {
       var filtered = _users.Where(predicate.Compile()).ToList();
       return await Task.FromResult(filtered);
     }

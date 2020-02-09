@@ -1,6 +1,7 @@
 ﻿using DEDrake.Data.Interfaces;
 using DEDrake.Data.Models;
 using DEDrake.Services.Interfaces;
+using DEDrake.Services.Utils;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System;
@@ -27,8 +28,9 @@ namespace DEDrake.Services {
       return await cursor.ToListAsync();
     }
 
-    public async Task<IEnumerable<IUserDocument>> GetAsync(Expression<Func<UserDocument, bool>> predicate) {
-      var cursor = await _collection.FindAsync(predicate);
+    public async Task<IEnumerable<IUserDocument>> GetAsync(Expression<Func<IUserDocument, bool>> predicate) {
+      var query = ExpressionTransform<IUserDocument, UserDocument>.Transform(predicate);
+      var cursor = await _collection.FindAsync(query);
       return await cursor.ToListAsync();
     }
 

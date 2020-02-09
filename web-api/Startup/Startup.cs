@@ -1,3 +1,4 @@
+using DEDrake.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,9 @@ namespace DEDrake {
 
     public void ConfigureServices(IServiceCollection services) {
       services.AddControllers();
+      services.AddOptions();
+
+      services.Configure<AuthConfiguration>(Configuration.GetSection("Authentication"));
 
       new AuthStartup(services, Configuration).AddJwtAuthentication();
       new MongoStartup(services, Configuration).AddDocumentServices();

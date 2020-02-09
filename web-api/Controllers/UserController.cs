@@ -10,6 +10,7 @@ namespace DEDrake.Controllers {
   [ApiController, Route("v1/users")]
   public class UserController : ControllerBase {
     private readonly IUserService _service;
+    // private readonly IUserPrincipal _user;
 
     public UserController(IUserService service) {
       _service = service;
@@ -64,14 +65,5 @@ namespace DEDrake.Controllers {
       await _service.DeleteAsync(id);
       return Ok();
     }
-
-    //[AllowAnonymous, HttpPost("authenticate")]
-    //public async Task<ActionResult<string>> Authenticate([FromBody] UserLoginModel model) {
-    //  var token = await Service.AuthenticateAsync(model.Email, model.Password);
-
-    //  if (token == null) { return BadRequest(new { message = "Username or password is incorrect" }); };
-
-    //  return Ok(token);
-    //}
   }
 }

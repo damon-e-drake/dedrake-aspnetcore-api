@@ -3,5 +3,6 @@
 namespace DEDrake.Services.Interfaces {
   public interface IUserService : IDocumentService<IUserDocument> {
 
+
   }
 }

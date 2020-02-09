@@ -15,7 +15,7 @@ namespace DEDrake {
     }
 
     public void AddJwtAuthentication() {
-      var jwtSecret = _config.GetValue<string>("Authentication:Secret");
+      var jwtSecret = _config.GetValue<string>("Authentication:JWTSecret");
       var key = Encoding.ASCII.GetBytes(jwtSecret);
 
       _services.AddAuthentication(auth => {
