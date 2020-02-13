@@ -1,6 +1,7 @@
 ﻿using DEDrake.Data.Interfaces;
 using DEDrake.Data.Models;
 using DEDrake.Services.Interfaces;
+using DEDrake.Services.Utils;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System;
@@ -26,8 +27,10 @@ namespace DEDrake.Services {
       throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<ICredentialDocument>> GetAsync(Expression<Func<ICredentialDocument, bool>> predicate) {
-      throw new NotImplementedException();
+    public async Task<IEnumerable<ICredentialDocument>> GetAsync(Expression<Func<ICredentialDocument, bool>> predicate) {
+      var query = ExpressionTransform<ICredentialDocument, CredentialDocument>.Transform(predicate);
+      var cursor = await _collection.FindAsync(query);
+      return await cursor.ToListAsync();
     }
 
     public Task<ICredentialDocument> FindAsync(string id, string partitionKey) {
