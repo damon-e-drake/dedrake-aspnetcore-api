@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 namespace DEDrake.Data.Interfaces {
-  public interface IUserDocument {
+  public interface IUserDocument : IMongoDocument {
     string ID { get; set; }
     bool Enabled { get; set; }
     string FirstName { get; set; }

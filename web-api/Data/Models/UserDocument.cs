@@ -1,4 +1,5 @@
-﻿using DEDrake.Data.Interfaces;
+﻿using DEDrake.Data.Helpers;
+using DEDrake.Data.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
@@ -19,10 +20,10 @@ namespace DEDrake.Data.Models {
     [BsonElement("lastName")]
     public string LastName { get; set; }
 
-    [BsonElement("displayName")]
+    [BsonElement("displayName"), BsonRequired]
     public string DisplayName { get; set; }
 
-    [BsonElement("email")]
+    [BsonElement("email"), BsonRequired]
     public string Email { get; set; }
 
     [BsonElement("createdAt")]
@@ -33,6 +34,10 @@ namespace DEDrake.Data.Models {
 
     [BsonElement("roles")]
     public IEnumerable<string> Roles { get; set; }
+
+    public bool IsValid() {
+      return MongoRequiredProperties.IsValid(this);
+    }
   }
 
   public class UserDocumentPhone : IUserDocumentPhone {

@@ -1,4 +1,4 @@
-﻿using DEDrake.Tests.MockData;
+﻿using DEDrake.Data.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace DEDrake.Tests.TestData {
 
       yield return new object[] {
         "f2cbf908-a704-4543-9d39-f497be0fe5ab",
-        new MockUserDocument {
+        new UserDocument {
           ID = "f2cbf908-a704-4543-9d39-f497be0fe5ab",
           Enabled = true,
           FirstName = "Admin",
@@ -28,7 +28,7 @@ namespace DEDrake.Tests.TestData {
 
       yield return new object[] {
         "f2cbf908-a704-4543-9d39-f497be0fe5ab",
-        new MockUserDocument {
+        new UserDocument {
           ID = "2bdc66ec-6552-42e7-896f-05b153ec3ef6",
           Enabled = true,
           FirstName = "Member",

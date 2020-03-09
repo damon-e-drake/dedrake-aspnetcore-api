@@ -9,11 +9,11 @@ using Microsoft.Extensions.Hosting;
 
 namespace DEDrake {
   public class Startup {
+    public IConfiguration Configuration { get; }
+
     public Startup(IConfiguration configuration) {
       Configuration = configuration;
     }
-
-    public IConfiguration Configuration { get; }
 
     public void ConfigureServices(IServiceCollection services) {
       services.AddControllers();
@@ -22,8 +22,8 @@ namespace DEDrake {
       services.Configure<AuthConfiguration>(Configuration.GetSection("Authentication"));
       services.AddScoped<IAuthService, AuthService>();
 
-      new AuthStartup(services, Configuration).AddJwtAuthentication();
-      new MongoStartup(services, Configuration).AddDocumentServices();
+      services.AddJwtAuthentication(Configuration);
+      services.AddMongoServices(Configuration);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {

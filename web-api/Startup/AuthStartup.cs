@@ -5,20 +5,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace DEDrake {
-  public class AuthStartup {
-    private readonly IServiceCollection _services;
-    private readonly IConfiguration _config;
+  public static class AuthStartup {
 
-    public AuthStartup(IServiceCollection services, IConfiguration config) {
-      _services = services;
-      _config = config;
-    }
-
-    public void AddJwtAuthentication() {
-      var jwtSecret = _config.GetValue<string>("Authentication:JWTSecret");
+    public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration config) {
+      var jwtSecret = config.GetValue<string>("Authentication:JWTSecret");
       var key = Encoding.ASCII.GetBytes(jwtSecret);
 
-      _services.AddAuthentication(auth => {
+      services.AddAuthentication(auth => {
         auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
       }).AddJwtBearer(jwt => {
@@ -33,4 +26,5 @@ namespace DEDrake {
       });
     }
   }
+
 }
