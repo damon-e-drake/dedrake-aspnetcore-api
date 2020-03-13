@@ -39,6 +39,8 @@ namespace DEDrake.Security {
       rand.GetBytes(_salt);
     }
 
+
+
     public void HashPassword() {
       var hash = KeyDerivation.Pbkdf2(_password, _salt, KeyDerivationPrf.HMACSHA256, 4741, 48);
       Hash = Convert.ToBase64String(_salt.Concat(hash).ToArray());
